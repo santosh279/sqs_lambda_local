@@ -1,0 +1,17 @@
+{
+  "name": "serverless-sqs-lambda-demo",
+  "version": "1.0.0",
+  "description": "A local sqs and lambda setup",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Santosh Kumar M",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.897.0",
+    "serverless-domain-manager": "^5.1.0",
+    "serverless-offline": "^7.0.0",
+    "serverless-offline-sqs": "^4.1.1"
+  }
+}

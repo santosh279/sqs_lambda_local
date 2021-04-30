@@ -1,0 +1,46 @@
+service: serverless-sqs-lambda
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: local
+  region: us-east-1
+
+package:
+  individually: true
+
+plugins:
+  - serverless-offline
+  - serverless-offline-sqs
+  - serverless-domain-manager
+
+custom:
+  stage: ${file(stage_variables/${opt:stage, self:provider.stage}.yaml)}
+  serverless-offline-sqs:
+    endpoint: http://0.0.0.0:9324
+    region: ${self:provider.region}
+    accessKeyId: root
+    secretAccessKey: root
+
+functions:
+  producer:
+    handler: handler.producer
+    environment:
+      USER_MESSAGE_QUEUE_URL: ${self:custom.stage.sqs.user.url}
+    events:
+    - http:
+        path: api/users
+        method: POST
+        integration: lambda
+  consumer:
+    handler: handler.consumer
+    events: 
+      - sqs: ${self:custom.stage.sqs.user.arn}
+    
+resources:
+ Resources:
+   user:
+     Type: AWS::S3::Queue
+     Properties:
+       QueueName: user
