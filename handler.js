@@ -14,7 +14,7 @@ module.exports.producer = () => {
     if (err) {
       console.log("Error encountered sending a message: %s", err);
     } else {
-      console.log("A message about a cat fact is sent to " + params.QueueUrl);
+      console.log("A message about is sent to " + params.QueueUrl);
     }
   });
 };
